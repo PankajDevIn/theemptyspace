@@ -21,6 +21,12 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
   }, [messages])
 
   return (
+
+    <>   <Helmet>
+        <title>Private Chat Room | EchoSpace Catharsis</title>
+        <meta name="description" content="Your volatile client-side workspace memory is active. Write freely inside an unlogged system canvas." />
+        <meta name="robots" content="noindex, nofollow" /> {/* Prevents your temporary dynamic internal session logs from appearing on public search listings */}
+      </Helmet>
     <div className='w-full max-w-2xl mx-auto flex flex-col h-[80vh] bg-[#1A1A1A] border border-neutral-800 rounded-3xl shadow-2xl overflow-hidden mt-6'>
       
       {/* Chat Header */}
@@ -80,6 +86,7 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
       </form>
 
     </div>
+    </>
   )
 }
 

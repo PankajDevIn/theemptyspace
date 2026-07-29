@@ -5,7 +5,9 @@ import Home from './pages/Home'
 import Navbar from './component/Navbar'
 import ChatRoom from './pages/ChatRoom'
 import Support from './pages/Support'
-
+import Footer from './component/Footer'
+import PrivacyPolicy from './pages/PrivecyPolicy'
+import AboutUs from './pages/Aboutus'
 function App() {
   const [selectedMood, setSelectedMood] = useState(null)
   const [messages, setMessages] = useState([])
@@ -60,7 +62,10 @@ function App() {
             } 
           />
           <Route path="/support" element={<Support />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/about" element={<AboutUs />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   )
