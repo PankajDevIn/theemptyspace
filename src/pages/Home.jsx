@@ -5,13 +5,13 @@ import { Heart, Frown, Flame, Trash2, ShieldAlert } from 'lucide-react'
 const Home = ({ onSelectMood }) => {
   const navigate = useNavigate()
 
-  const handleCardClick = (mood) => {
-    onSelectMood(mood)
-    navigate('/chat')
+  const handleCardClick = (moodKey, moodLabel) => {
+    onSelectMood(moodKey)
+    navigate('/chat', { state: { mood: moodLabel } })
   }
 
   return (
-    <div className='home w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-white'>
+    <div className='home w-full max-w-4xl mx-auto px-6 flex flex-col items-center text-white mt-10'>
       
       {/* Hero Header */}
       <div className='text-center space-y-4 mb-12'>
@@ -34,10 +34,7 @@ const Home = ({ onSelectMood }) => {
       {/* Mood Cards Grid */}
       <div className='w-full max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-6'>
         <button 
-        onClick={() => {
-    onSelectMood('happy')
-    navigate('/chat', { state: { mood: 'Happy / Joy' } })
-  }}
+          onClick={() => handleCardClick('happy', 'Happy / Joy')}
           className='bg-[#1A1A1A] border border-neutral-800 hover:border-rose-500/50 p-8 rounded-3xl text-left transition-all duration-300 group hover:shadow-2xl hover:shadow-rose-500/10'
         >
           <div className='w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform'>
@@ -48,7 +45,7 @@ const Home = ({ onSelectMood }) => {
         </button>
 
         <button 
-          onClick={() => handleCardClick('sad')} 
+          onClick={() => handleCardClick('sad', 'Sad / Heavy')} 
           className='bg-[#1A1A1A] border border-neutral-800 hover:border-blue-500/50 p-8 rounded-3xl text-left transition-all duration-300 group hover:shadow-2xl hover:shadow-blue-500/10'
         >
           <div className='w-14 h-14 rounded-2xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform'>
@@ -59,7 +56,7 @@ const Home = ({ onSelectMood }) => {
         </button>
 
         <button 
-          onClick={() => handleCardClick('angry')} 
+          onClick={() => handleCardClick('angry', 'Angry / Frustrated')} 
           className='bg-[#1A1A1A] border border-neutral-800 hover:border-purple-500/50 p-8 rounded-3xl text-left transition-all duration-300 group hover:shadow-2xl hover:shadow-purple-500/10'
         >
           <div className='w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform'>
@@ -70,7 +67,7 @@ const Home = ({ onSelectMood }) => {
         </button>
 
         <button 
-          onClick={() => handleCardClick('empty')} 
+          onClick={() => handleCardClick('empty', 'Just Empty Yourself')} 
           className='bg-[#1A1A1A] border border-neutral-800 hover:border-emerald-500/50 p-8 rounded-3xl text-left transition-all duration-300 group hover:shadow-2xl hover:shadow-emerald-500/10'
         >
           <div className='w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform'>

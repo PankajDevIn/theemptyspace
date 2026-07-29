@@ -1,11 +1,11 @@
-
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Send, LogOut, MessageSquareOff } from 'lucide-react'
 
 const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLeave }) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const messagesEndRef = useRef(null)
 
   // Fallback to router state or prop if selectedMood is missing on direct refresh
   const currentMood = selectedMood || location.state?.mood || 'General Space'
@@ -15,8 +15,13 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
     navigate('/')
   }
 
+  // Smoothly auto-scrolls down when new local content items push into view
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
   return (
-    <div className='w-full max-w-2xl mx-auto flex flex-col h-[80vh] bg-[#1A1A1A] border border-neutral-800 rounded-3xl shadow-2xl overflow-hidden'>
+    <div className='w-full max-w-2xl mx-auto flex flex-col h-[80vh] bg-[#1A1A1A] border border-neutral-800 rounded-3xl shadow-2xl overflow-hidden mt-6'>
       
       {/* Chat Header */}
       <div className='bg-[#161616] border-b border-neutral-800 px-6 py-4 flex justify-between items-center'>
@@ -45,12 +50,14 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
           </div>
         ) : (
           messages.map((msg) => (
-            <div key={msg.id} className='bg-[#222222] border border-neutral-800 rounded-2xl p-4 shadow-inner max-w-lg'>
+            <div key={msg.id} className='bg-[#222222] border border-neutral-800 rounded-2xl p-4 shadow-inner max-w-lg animate-fadeIn'>
               <p className='text-neutral-200 text-sm md:text-base whitespace-pre-wrap leading-relaxed'>{msg.text}</p>
               <span className='block text-[10px] text-neutral-500 text-right mt-2'>{msg.time}</span>
             </div>
           ))
         )}
+        {/* Invisible anchor element to target the auto scroll positions */}
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Message Input Form */}
@@ -65,7 +72,8 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
         />
         <button 
           type='submit' 
-          className='bg-rose-600 hover:bg-rose-500 text-white px-6 py-3.5 rounded-2xl transition flex items-center justify-center shadow-lg shadow-rose-600/20'
+          disabled={!text.trim()}
+          className='bg-rose-600 hover:bg-rose-500 disabled:bg-neutral-800 disabled:text-neutral-600 text-white px-6 py-3.5 rounded-2xl transition flex items-center justify-center shadow-lg shadow-rose-600/20'
         >
           <Send className='w-4 h-4' />
         </button>
@@ -76,4 +84,3 @@ const ChatRoom = ({ selectedMood, messages, text, setText, handleSend, handleLea
 }
 
 export default ChatRoom
-
