@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './Home'
-import ChatRoom from './Chat'
+import ChatRoom from './ChatRoom'
 
 function App() {
   const [selectedMood, setSelectedMood] = useState(null)
